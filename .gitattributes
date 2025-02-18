@@ -1,0 +1,10 @@
+# Установить LF для всех текстовых файлов
+* text=auto
+
+# Явно указать формат для Java и JSP файлов
+*.java text eol=lf
+*.jsp text eol=lf
+
+# Исключить бинарные файлы
+*.png binary
+*.jpg binary
