@@ -5,6 +5,6 @@
 </head>
 <body>
     <h1>Welcome to My Web Application</h1>
-    <p><a href="hello">Click here to see the servlet response</a></p>
+    <p><a href="hello">Click here</a></p>
 </body>
 </html>
