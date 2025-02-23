@@ -13,14 +13,14 @@ import java.io.PrintWriter;
 public class HelloServlet extends HttpServlet {
     private static final String VERSION1 = "1.0";
     private static final String VERSION2 = "2.0";
-
+    private static final String VERSION3 = "3.0";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>Hello, World!</h1>");
-        out.println("<p>Version: " + VERSION2 + "</p>");
+        out.println("<p>Version: " + VERSION3 + "</p>");
         out.println("</body></html>");
     }
 }
