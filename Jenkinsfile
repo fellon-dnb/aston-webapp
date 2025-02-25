@@ -13,13 +13,20 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: "https://github.com/fellon-dnb/aston-webapp.git"
+                git branch: 'master', url: "${GITHUB_REPO}"
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean package'  // для Windows, если на Linux — заменяем на sh './mvnw clean package'
+                script {
+                    // Для Windows
+                    if (isUnix()) {
+                        sh './mvnw clean package' // Используем mvnw, если на Linux или macOS
+                    } else {
+                        bat 'mvn clean package' // Для Windows
+                    }
+                }
             }
         }
 
@@ -27,13 +34,36 @@ pipeline {
             steps {
                 script {
                     def warFile = findFiles(glob: 'target/*.war')[0].path
-                    sh """
-                        curl -v --user ${TOMCAT_USER}:${TOMCAT_PASS} \
-                        --upload-file ${warFile} \
-                        "http://${SERVER_IP}:8085/manager/text/deploy?path=/myapp&update=true"
-                    """
+                    echo "Found WAR file: ${warFile}"
+
+                    // Для Windows или Linux
+                    if (isUnix()) {
+                        sh """
+                            curl -v --user ${TOMCAT_USER}:${TOMCAT_PASS} \
+                            --upload-file ${warFile} \
+                            "http://${SERVER_IP}:8085/manager/text/deploy?path=/myapp&update=true"
+                        """
+                    } else {
+                        bat """
+                            curl -v --user ${TOMCAT_USER}:${TOMCAT_PASS} ^
+                            --upload-file ${warFile} ^
+                            "http://${SERVER_IP}:8085/manager/text/deploy?path=/myapp&update=true"
+                        """
+                    }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished'
+        }
+        success {
+            echo 'Build and Deploy succeeded!'
+        }
+        failure {
+            echo 'Build or Deploy failed!'
         }
     }
 }
