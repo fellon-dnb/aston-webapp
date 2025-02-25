@@ -20,9 +20,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Для Windows
+
                     if (isUnix()) {
-                        sh './mvnw clean package' // Используем mvnw, если на Linux или macOS
+                        sh 'mvn clean package -Dfile.encoding=UTF-8'
                     } else {
                         bat 'mvn clean package' // Для Windows
                     }
