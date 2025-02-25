@@ -4,8 +4,8 @@ pipeline {
     environment {
         GITHUB_REPO = 'https://github.com/fellon-dnb/aston-webapp.git'
         SERVER_IP = '46.229.213.155'
-        TOMCAT_USER = 'root'
-        TOMCAT_PASS = 'h+X1-gM+i-KiQv'
+        TOMCAT_USER = 'jenkins'
+        TOMCAT_PASS = '12345678'
         TOMCAT_WEBAPPS = '/opt/tomcat/webapps'
         WAR_NAME = 'app.war'
     }
