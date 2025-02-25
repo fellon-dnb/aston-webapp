@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvnw clean package'  // для Windows, если на Linux — заменяем на sh './mvnw clean package'
+                bat 'mvn clean package'  // для Windows, если на Linux — заменяем на sh './mvnw clean package'
             }
         }
 
